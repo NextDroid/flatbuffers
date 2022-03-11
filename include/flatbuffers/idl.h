@@ -56,7 +56,7 @@ namespace flatbuffers {
   TD(LONG,   "long",   int64_t,  long,   int64,   long,   int64,   i64,  Long, Int64) \
   TD(ULONG,  "ulong",  uint64_t, long,   uint64,  ulong,  uint64,  u64,  ULong, UInt64) /* end int */ \
   TD(FLOAT,  "float",  float,    float,  float32, float,  float32, f32,  Float, Float32) /* begin float */ \
-  TD(DOUBLE, "double", double,   double, float64, double, float64, f64,  Double, Double) /* end float/scalar */
+  TD(DOUBLE, "double", double,   double, float64, double, float64, f64,  Double, Float64) /* end float/scalar */
 #define FLATBUFFERS_GEN_TYPES_POINTER(TD) \
   TD(STRING, "string", Offset<void>, int, int, StringOffset, int, unused, Int, Offset<String>) \
   TD(VECTOR, "",       Offset<void>, int, int, VectorOffset, int, unused, Int, Offset<UOffset>) \
@@ -65,22 +65,23 @@ namespace flatbuffers {
 #define FLATBUFFERS_GEN_TYPE_ARRAY(TD) \
   TD(ARRAY,  "",       int,          int, int, int,          int, unused, Int, Offset<UOffset>)
 // The fields are:
-// - enum
-// - FlatBuffers schema type.
-// - C++ type.
-// - Java type.
-// - Go type.
-// - C# / .Net type.
-// - Python type.
-// - Kotlin type.
-// - Rust type.
+// - ENUM:    enum
+// - IDLTYPE: FlatBuffers schema type.
+// - CTYPE:   C++ / Text type.
+// - JTYPE:   Java type.
+// - GTYPE:   Go type.
+// - NTYPE:   C# / PHP / .Net type.
+// - PTYPE:   Python / Lobster / Lua type.
+// - RTYPE:   Rust type.
+// - KTYPE:   Kotlin type.
+// - JLTYPE:  Julia / Swift type.
 
 // using these macros, we can now write code dealing with types just once, e.g.
 
 /*
 switch (type) {
   #define FLATBUFFERS_TD(ENUM, IDLTYPE, CTYPE, JTYPE, GTYPE, NTYPE, PTYPE, \
-                         RTYPE, KTYPE) \
+                         RTYPE, KTYPE, JLTYPE) \
     case BASE_TYPE_ ## ENUM: \
       // do something specific to CTYPE here
     FLATBUFFERS_GEN_TYPES(FLATBUFFERS_TD)
@@ -621,6 +622,7 @@ struct IDLOptions {
     kRust = 1 << 14,
     kKotlin = 1 << 15,
     kSwift = 1 << 16,
+    kJulia = 1 << 18,
     kMAX
   };
 
@@ -1102,6 +1104,11 @@ extern bool GenerateDart(const Parser &parser, const std::string &path,
 // See idl_gen_java.cpp.
 extern bool GenerateJava(const Parser &parser, const std::string &path,
                          const std::string &file_name);
+
+// Generate Julia files from the definitions in the Parser object.
+// See idl_gen_julia.cpp.
+extern bool GenerateJulia(const Parser &parser, const std::string &path,
+                          const std::string &file_name);
 
 // Generate JavaScript or TypeScript code from the definitions in the Parser
 // object. See idl_gen_js.

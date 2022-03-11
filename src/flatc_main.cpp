@@ -73,7 +73,6 @@ int main(int argc, const char *argv[]) {
       flatbuffers::IDLOptions::kJson,
       flatbuffers::FlatCOption{
           "t", "json", "", "Generate text output for any data definitions" },
-
       flatbuffers::TextMakeRule, nullptr, nullptr },
     { flatbuffers::GenerateCPP, "C++", true, flatbuffers::GenerateCppGRPC,
       flatbuffers::IDLOptions::kCpp,
@@ -90,6 +89,11 @@ int main(int argc, const char *argv[]) {
       flatbuffers::FlatCOption{ "j", "java", "",
                                 "Generate Java classes for tables/structs" },
       flatbuffers::JavaMakeRule, nullptr, nullptr },
+    { flatbuffers::GenerateJulia, "Julia", true, nullptr,
+      flatbuffers::IDLOptions::kJulia,
+      flatbuffers::FlatCOption{ "", "julia", "",
+                                "Generate Julia modules for tables/structs" },
+      nullptr, nullptr, nullptr },
     { flatbuffers::GenerateDart, "Dart", true, nullptr,
       flatbuffers::IDLOptions::kDart,
       flatbuffers::FlatCOption{ "d", "dart", "",

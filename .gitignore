@@ -147,3 +147,5 @@ flatbuffers.pc
 **/latex/**
 # https://cmake.org/cmake/help/latest/module/FetchContent.html#variable:FETCHCONTENT_BASE_DIR
 _deps/
+DataSchemas/
+ts-files.txt
